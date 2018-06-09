@@ -16,7 +16,15 @@ app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
-io
+io.on('connection', socket => {
+  socket.on('add user', msg => {
+    socket.userName = msg;
+    console.log('user: ' + msg + 'logging')
+    io.emit('add user', {
+      userName = socket.userName;
+    })
+  })
+);
 
 app.listen(3001, () => {
   console.log("Server Started. http://localhost:3001");
